@@ -52,7 +52,7 @@ git clone https://aur.archlinux.org/yay.git && (cd yay && makepkg -si --noconfir
 # Dealing with pacman and yay cache...
 info_print "Dealing with pacman and yay cache..."
 sudo pacman -S --noconfirm pacman-contrib
-sudo curl -L --create-dirs -o /usr/share/libalpm/hooks/clear_cache.hook https://raw.githubusercontent.com/CEnjolras/dotfiles/main/install/clear_clache.hook
+sudo curl -L --create-dirs -o /usr/share/libalpm/hooks/clear_cache.hook https://raw.githubusercontent.com/CEnjolras/dotfiles/main/install/clear_cache.hook
 
 
 #====================
