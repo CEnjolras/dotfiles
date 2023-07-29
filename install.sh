@@ -49,7 +49,7 @@ pacman -Syyu
 # Installing yay
 info_print "Installing yay..."
 git clone https://aur.archlinux.org/yay.git && (cd yay && makepkg -si --noconfirm) && rm -rf yay
-
+yay --save --answerdiff None --answerclean None --removemake
 
 # Dealing with pacman cache
 info_print "Dealing with pacman and yay cache..."
@@ -76,6 +76,13 @@ fi
 
 
 #====================
+# 4 - Hyprland
+#====================
+# install hyprland
+info_print "Installing hyprland..."
+yay -S hyprland --noconfirm
+
+#====================
 # 1 - Git
 #====================
 info_print "Git basic config..."
@@ -83,8 +90,16 @@ git config --global user.name  "Clément Enjolras"
 git config --global user.email "enj.clement@gmail.com"
 
 #====================
-# 1 - Random stuff
+# 1 - Todo
+# - SDDM
+# - Remove grub delay
+# - Fonts
+# - Terminal
+# - waybar
+# - notifications
+# - asking for password visually
 #====================
+# SDDM
+# sudo pacman -S sddm
+# systemctl enable sddm.service
 # Remove grub delay
-sudo sed -i 's/GRUB_TIMEOUT=.*$/GRUB_TIMEOUT=0/' "/boot/grub/grub.cfg"
-sudo grub-mkconfig -o /boot/grub/grub.cfg
