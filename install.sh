@@ -9,7 +9,7 @@
 #	- Adding pacman hook to clear cache
 #	- Performs a system upgrade
 
-
+exec > /dev/null 2>&1
 
 #====================
 # Functions
@@ -47,7 +47,7 @@ pacman -S --noconfirm --needed git base-devel
 git clone https://aur.archlinux.org/yay.git && (cd yay && makepkg -si --noconfirm) && rm -rf yay
 
 
-# Clearing cache from time to time
+# Clearing cache from time to timerm
 sudo pacman -S --noconfirm pacman-contrib
 curl -L --create-dirs -o $HOME/.local/bin/yaycache https://bit.ly/yaycache && chmod +x $HOME/.local/bin/yaycache
 [ -f "$HOME/.bashrc" ] && grep -qxF 'export PATH="$HOME/.local/bin:$PATH"' "$HOME/.bashrc" || echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$HOME/.bashrc" && source "$HOME/.bashrc"
