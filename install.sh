@@ -31,8 +31,6 @@ sudo pacman -S git base-devel --noconfirm
 # 2 - Pacman & yay
 #====================
 
-info_print "Setup pacman & yay : fastest mirrors, enable colors, parallel downloads, system update..."
-
 # Setting up reflector
 info_print "Setting up reflector..."
 sudo pacman -S --noconfirm reflector && sudo systemctl enable --now reflector.timer && sudo reflector --latest 5 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
@@ -54,11 +52,7 @@ git clone https://aur.archlinux.org/yay.git && (cd yay && makepkg -si --noconfir
 # Dealing with pacman and yay cache...
 info_print "Dealing with pacman and yay cache..."
 sudo pacman -S --noconfirm pacman-contrib
-# Downloading cleaning script
-curl -L --create-dirs -o ~/.local/bin/yaycache https://raw.githubusercontent.com/CEnjolras/dotfiles/main/install/yaycache && chmod +x ~/.local/bin/yaycache
-touch ~/.bashrc && echo 'export PATH="~/.local/bin:$PATH"' >> "~/.bashrc" && source "~/.bashrc"
-# Hooking it to pacman upgrades and uninstallations
-sudo curl -L --create-dirs -o /usr/share/libalpm/hooks/yaycache.hook https://raw.githubusercontent.com/CEnjolras/dotfiles/main/install/yaycache.hook
+sudo curl -L --create-dirs -o /usr/share/libalpm/hooks/clear_cache.hook https://raw.githubusercontent.com/CEnjolras/dotfiles/main/install/clear_clache.hook
 
 
 #====================

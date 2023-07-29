@@ -1,11 +1,14 @@
+# /usr/share/libalpm/hooks/clear_cache.hook
+
 [Trigger]
 Operation = Upgrade
 Operation = Remove
 Type = Package
-Target = *
+
+# Uncomment this line if you also want to clear cache on installation
+#Operation = Install
 
 [Action]
-Description = Cleaning pacman and yay cache...
-When = PostTransaction
-Exec = ~/.local/bin/yaycache
-Depends = pacman-contrib
+Description = Clearing yay and pacman cache...
+When = PreTransaction
+Exec = /bin/sh -c 'yay -Scc --noconfirm && paccache -r'
