@@ -9,8 +9,6 @@
 #	- Adding pacman hook to clear cache
 #	- Performs a system upgrade
 
-exec > /dev/null 2>&1
-
 #====================
 # Functions
 #====================
