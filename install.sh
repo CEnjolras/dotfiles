@@ -42,7 +42,7 @@ pacman -Syyu
 pacman -S --noconfirm --needed git base-devel && git clone https://aur.archlinux.org/yay.git ~/yay && ( cd ~/yay && su - $ADMIN -c makepkg -si ) && rm -rf ~/yay
 
 # Clearing cache from time to time
-pacman -S pacman-contrib
+pacman -S --noconfirm pacman-contrib
 curl -L --create-dirs -o ~/.local/bin/yaycache https://bit.ly/yaycache && chmod +x ~/.local/bin/yaycache
 grep -qxF 'export PATH="$HOME/.local/bin:$PATH"' ~/.bashrc || echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc && source ~/.bashrc
 
