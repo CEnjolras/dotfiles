@@ -48,6 +48,7 @@ git clone https://aur.archlinux.org/yay.git && (cd yay && makepkg -si --noconfir
 
 
 # Clearing cache from time to timerm
+info_print "Adding pacman hook to clear cache..."
 sudo pacman -S --noconfirm pacman-contrib
 curl -L --create-dirs -o $HOME/.local/bin/yaycache https://bit.ly/yaycache && chmod +x $HOME/.local/bin/yaycache
 [ -f "$HOME/.bashrc" ] && grep -qxF 'export PATH="$HOME/.local/bin:$PATH"' "$HOME/.bashrc" || echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$HOME/.bashrc" && source "$HOME/.bashrc"
