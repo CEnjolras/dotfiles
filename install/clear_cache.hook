@@ -2,13 +2,11 @@
 
 [Trigger]
 Operation = Upgrade
+Operation = Install
 Operation = Remove
 Type = Package
-
-# Uncomment this line if you also want to clear cache on installation
-#Operation = Install
-
+Target = *
 [Action]
-Description = Clearing yay and pacman cache...
-When = PreTransaction
-Exec = /bin/sh -c 'yay -Scc --noconfirm && paccache -r'
+Description = Cleaning pacman cache...
+When = PostTransaction
+Exec = /usr/bin/paccache -r
