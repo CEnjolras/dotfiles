@@ -62,7 +62,7 @@ touch $HOME/.bashrc && echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$HOME/.ba
 #====================
 # 1 - Git
 #====================
-
+info_print "Git basic config..."
 git config --global user.name  "Clément Enjolras"
 git config --global user.email "enj.clement@gmail.com"
 
