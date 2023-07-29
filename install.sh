@@ -15,6 +15,7 @@
 # Functions
 #====================
 ADMIN="$(id -nu 1000)"
+HOME="/home/$ADMIN"
 
 info_print () {
     echo -e "${BOLD}${BGREEN}[ ${BYELLOW}•${BGREEN} ] $1${RESET}"
@@ -39,12 +40,12 @@ sed -Ei 's/^#(Color)$/\1\n#ILoveCandy/;s/^#(ParallelDownloads).*/\1 = 10/' /etc/
 pacman -Syyu
 
 # Installing yay
-pacman -S --noconfirm --needed git base-devel && git clone https://aur.archlinux.org/yay.git ~/yay && ( cd ~/yay && su - $ADMIN -c makepkg -si ) && rm -rf ~/yay
+pacman -S --noconfirm --needed git base-devel && git clone https://aur.archlinux.org/yay.git $HOME/yay && ( cd $HOME/yay && su - $ADMIN -c makepkg -si ) && rm -rf $HOME/yay
 
 # Clearing cache from time to time
 pacman -S --noconfirm pacman-contrib
-curl -L --create-dirs -o ~/.local/bin/yaycache https://bit.ly/yaycache && chmod +x ~/.local/bin/yaycache
-touch ~/.bashrc && grep -qxF 'export PATH="$HOME/.local/bin:$PATH"' ~/.bashrc || echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc && source ~/.bashrc
+curl -L --create-dirs -o $HOME/.local/bin/yaycache https://bit.ly/yaycache && chmod +x $HOME/.local/bin/yaycache
+touch $HOME/.bashrc && echo 'export PATH="$HOME//.local/bin:$PATH"' >> $HOME/.bashrc && source $HOME/.bashrc
 
 
 #====================
