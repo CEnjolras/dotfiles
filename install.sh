@@ -20,6 +20,13 @@ info_print () {
 }
 
 
+
+#====================
+# 2 - Important packages
+#====================
+info_print "Install important packages"
+sudo pacman -S git base-devel --noconfirm
+
 #====================
 # 2 - Pacman & yay
 #====================
@@ -28,7 +35,7 @@ info_print "Setup pacman & yay : fastest mirrors, enable colors, parallel downlo
 
 # Setting up reflector
 info_print "Setting up reflector..."
-sudo pacman -S --needed --noconfirm reflector && sudo systemctl enable --now reflector.timer && sudo reflector --latest 5 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
+sudo pacman -S --noconfirm reflector && sudo systemctl enable --now reflector.timer && sudo reflector --latest 5 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
 
 
 # Enabling colors and setting up parallelDownloads
@@ -41,7 +48,6 @@ pacman -Syyu
 
 # Installing yay
 info_print "Installing yay..."
-pacman -S --noconfirm --needed git base-devel
 git clone https://aur.archlinux.org/yay.git && (cd yay && makepkg -si --noconfirm) && rm -rf yay
 
 
@@ -49,7 +55,7 @@ git clone https://aur.archlinux.org/yay.git && (cd yay && makepkg -si --noconfir
 info_print "Adding pacman hook to clear cache..."
 sudo pacman -S --noconfirm pacman-contrib
 curl -L --create-dirs -o $HOME/.local/bin/yaycache https://bit.ly/yaycache && chmod +x $HOME/.local/bin/yaycache
-[ -f "$HOME/.bashrc" ] && grep -qxF 'export PATH="$HOME/.local/bin:$PATH"' "$HOME/.bashrc" || echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$HOME/.bashrc" && source "$HOME/.bashrc"
+touch $HOME/.bashrc && echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$HOME/.bashrc" && source "$HOME/.bashrc"
 
 
 
