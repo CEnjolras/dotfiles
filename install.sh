@@ -3,11 +3,13 @@
 # Setups arch linux for me.
 #
 # Steps:
-# 1 - Setup pacman : 
+# 1 - Important packages
+# 2 - Setup pacman : 
 #	- Install reflector, setup fastest mirrors, and checks for fastest mirror every week
 #	- Enable colors and parallel downloads
 #	- Adding pacman hook to clear cache
 #	- Performs a system upgrade
+# 3 - Install microcode
 
 #====================
 # Functions
@@ -22,7 +24,7 @@ info_print () {
 
 
 #====================
-# 2 - Important packages
+# 1 - Important packages
 #====================
 info_print "Install important packages"
 sudo pacman -S git base-devel --noconfirm
@@ -51,8 +53,26 @@ git clone https://aur.archlinux.org/yay.git && (cd yay && makepkg -si --noconfir
 
 # Dealing with pacman cache
 info_print "Dealing with pacman and yay cache..."
-sudo pacman -S --noconfirm pacman-contrib
-sudo curl -L --create-dirs -o /usr/share/libalpm/hooks/clear_cache.hook https://raw.githubusercontent.com/CEnjolras/dotfiles/main/install/clear_cache.hook
+sudo systemctl enable paccache.timer
+#sudo pacman -S --noconfirm pacman-contrib
+#sudo curl -L --create-dirs -o /usr/share/libalpm/hooks/clear_cache.hook https://raw.githubusercontent.com/CEnjolras/dotfiles/main/install/clear_cache.hook
+
+
+#====================
+# 3 - install microcode
+#====================
+
+info_print "Installing microcode..."
+cpu_vendor=$(lscpu | grep -oP 'Vendor ID:\s+\K.*')
+if [ "$cpu_vendor" = "GenuineIntel" ]; then
+  info_print "Detected Intel CPU. Installing intel-ucode..."
+  sudo pacman -S --needed intel-ucode --noconfirm
+elif [ "$cpu_vendor" = "AuthenticAMD" ]; then
+  info_print "Detected AMD CPU. Installing amd-ucode..."
+  sudo pacman -S --needed amd-ucode --noconfirm
+else
+  echo "Unknown CPU vendor. Microcode installation not supported."
+fi
 
 
 #====================
@@ -62,10 +82,9 @@ info_print "Git basic config..."
 git config --global user.name  "Clément Enjolras"
 git config --global user.email "enj.clement@gmail.com"
 
-
-
-
-# 3 install microcode
-
-# pacman -S intel-ucode
-# grub-mkconfig -o /boot/grub/grub.cfg
+#====================
+# 1 - Random stuff
+#====================
+# Remove grub delay
+sudo sed -i 's/GRUB_TIMEOUT=.*$/GRUB_TIMEOUT=0/' "/boot/grub/grub.cfg"
+sudo grub-mkconfig -o /boot/grub/grub.cfg
