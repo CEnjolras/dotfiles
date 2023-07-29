@@ -35,8 +35,10 @@ sed -Ei 's/^#(Color)$/\1\n#ILoveCandy/;s/^#(ParallelDownloads).*/\1 = 10/' /etc/
 
 # Clearing cache from time to time
 pacman -S pacman-contrib
+curl -L --create-dirs -o ~/.local/bin/yaycache https://bit.ly/yaycache
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc && source ~/.bashrc || (touch ~/.bashrc && echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc && source ~/.bashrc)
 
-curl -L --create-dirs -o ~/.local/bin/yaycache URL
+
 
 # System upgrade
 pacman -Syyu
@@ -46,5 +48,5 @@ pacman -Syyu
 
 # 3 install microcode
 
-pacman -S intel-ucode
-grub-mkconfig -o /boot/grub/grub.cfg
+# pacman -S intel-ucode
+# grub-mkconfig -o /boot/grub/grub.cfg
