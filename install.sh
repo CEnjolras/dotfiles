@@ -29,31 +29,34 @@ info_print () {
 info_print "Setup pacman & yay : fastest mirrors, enable colors, parallel downloads, system update..."
 
 # Setting up reflector
-pacman -S --noconfirm reflector
-reflector --latest 5 --sort rate --save /etc/pacman.d/mirrorlist
-systemctl enable reflector.timer
+# pacman -S --noconfirm reflector
+# reflector --latest 5 --sort rate --save /etc/pacman.d/mirrorlist
+# systemctl enable reflector.timer
 
 # Enabling colors and setting up parallelDownloads
-sed -Ei 's/^#(Color)$/\1\n#ILoveCandy/;s/^#(ParallelDownloads).*/\1 = 10/' /etc/pacman.conf
+# sed -Ei 's/^#(Color)$/\1\n#ILoveCandy/;s/^#(ParallelDownloads).*/\1 = 10/' /etc/pacman.conf
 
 # System upgrade
-pacman -Syyu
+p#acman -Syyu
 
 # Installing yay
-pacman -S --noconfirm --needed git base-devel && git clone https://aur.archlinux.org/yay.git $HOME/yay && ( cd $HOME/yay && su - $ADMIN -c makepkg -si ) && rm -rf $HOME/yay
+pacman -S --noconfirm --needed git base-develcd
+git clone https://aur.archlinux.org/yay.git $HOME/yay 
+su - $ADMIN -c ('makepkg -si -p "$HOME/yay/PKGBUILD" -c "$HOME/yay/build"')
+rm -rf $HOME/yay
 
 # Clearing cache from time to time
-pacman -S --noconfirm pacman-contrib
-curl -L --create-dirs -o $HOME/.local/bin/yaycache https://bit.ly/yaycache && chmod +x $HOME/.local/bin/yaycache
-touch $HOME/.bashrc && echo 'export PATH="$HOME//.local/bin:$PATH"' >> $HOME/.bashrc && source $HOME/.bashrc
+#pacman -S --noconfirm pacman-contrib
+#curl -L --create-dirs -o $HOME/.local/bin/yaycache https://bit.ly/yaycache && chmod +x $HOME/.local/bin/yaycache
+#touch $HOME/.bashrc && echo 'export PATH="$HOME//.local/bin:$PATH"' >> $HOME/.bashrc && source $HOME/.bashrc
 
 
 #====================
 # 1 - Git
 #====================
 
-git config --global user.name  "Clément Enjolras"
-git config --global user.email "enj.clement@gmail.com"
+#git config --global user.name  "Clément Enjolras"
+#git config --global user.email "enj.clement@gmail.com"
 
 
 
