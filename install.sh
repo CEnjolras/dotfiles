@@ -26,7 +26,7 @@ info_print () {
 info_print "Setup pacman & yay : fastest mirrors, enable colors, parallel downloads, system update..."
 
 # Setting up reflector
-pacman -S reflector
+pacman -S --noconfirm reflector
 reflector --latest 5 --sort rate --save /etc/pacman.d/mirrorlist
 systemctl enable reflector.timer
 
@@ -37,7 +37,7 @@ sed -Ei 's/^#(Color)$/\1\n#ILoveCandy/;s/^#(ParallelDownloads).*/\1 = 10/' /etc/
 pacman -Syyu
 
 # Installing yay
-pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay.git ~/yay && ( cd ~/yay && makepkg -si ) && rm -rf ~/yay
+pacman -S --noconfirm --needed git base-devel && git clone https://aur.archlinux.org/yay.git ~/yay && ( cd ~/yay && makepkg -si ) && rm -rf ~/yay
 
 # Clearing cache from time to time
 pacman -S pacman-contrib
