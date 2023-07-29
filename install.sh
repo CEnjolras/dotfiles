@@ -36,7 +36,7 @@ info_print "Setting up reflector..."
 sudo pacman -S --noconfirm reflector && sudo systemctl enable --now reflector.timer && sudo reflector --latest 5 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
 
 
-# Enabling colors and setting up parallelDownloads
+# Enabling colors and setting up parallelDownloads e
 info_print "Enabling colors and parallel downloads..."
 sed -Ei 's/^#(Color)$/\1\n#ILoveCandy/;s/^#(ParallelDownloads).*/\1 = 10/' /etc/pacman.conf
 
