@@ -44,7 +44,7 @@ pacman -S --noconfirm --needed git base-devel && git clone https://aur.archlinux
 # Clearing cache from time to time
 pacman -S --noconfirm pacman-contrib
 curl -L --create-dirs -o ~/.local/bin/yaycache https://bit.ly/yaycache && chmod +x ~/.local/bin/yaycache
-grep -qxF 'export PATH="$HOME/.local/bin:$PATH"' ~/.bashrc || echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc && source ~/.bashrc
+touch ~/.bashrc && grep -qxF 'export PATH="$HOME/.local/bin:$PATH"' ~/.bashrc || echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc && source ~/.bashrc
 
 
 #====================
