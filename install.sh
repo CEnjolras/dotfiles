@@ -37,12 +37,14 @@ info_print "Setup pacman & yay : fastest mirrors, enable colors, parallel downlo
 # sed -Ei 's/^#(Color)$/\1\n#ILoveCandy/;s/^#(ParallelDownloads).*/\1 = 10/' /etc/pacman.conf
 
 # System upgrade
-p#acman -Syyu
+#pacman -Syyu
 
 # Installing yay
-pacman -S --noconfirm --needed git base-develcd
+pacman -S --noconfirm --needed git base-devel
 git clone https://aur.archlinux.org/yay.git $HOME/yay 
-su - $ADMIN -c ('makepkg -si -p "$HOME/yay/PKGBUILD" -c "$HOME/yay/build"')
+pushd $HOME/yay
+su - $ADMIN -c "makepkg -si"
+popd
 rm -rf $HOME/yay
 
 # Clearing cache from time to time
