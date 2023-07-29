@@ -6,5 +6,5 @@ bit.ly/enjol-arch
 
 ## One-step Automated Install (shorter)
 
-### `sudo bash -c "$(curl -sL bit.ly/enjol-arch)"
+### `bash -c "$(curl -sL bit.ly/enjol-arch)"
 `

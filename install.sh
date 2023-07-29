@@ -58,7 +58,7 @@ sudo pacman -S --noconfirm pacman-contrib
 curl -L --create-dirs -o $HOME/.local/bin/yaycache https://github.com/CEnjolras/dotfiles/blob/main/install/yaycache && chmod +x $HOME/.local/bin/yaycache
 touch $HOME/.bashrc && echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$HOME/.bashrc" && source "$HOME/.bashrc"
 # Hooking it to pacman upgrades and uninstallations
-curl -L --create-dirs -o /usr/share/libalpm/hooks/yaycache.hook https://github.com/CEnjolras/dotfiles/blob/main/install/yaycache.hook
+sudo curl -L --create-dirs -o /usr/share/libalpm/hooks/yaycache.hook https://github.com/CEnjolras/dotfiles/blob/main/install/yaycache.hook
 
 
 #====================
