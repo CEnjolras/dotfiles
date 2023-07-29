@@ -28,7 +28,7 @@ for pkgdir in "$cachedir"/*/; do
 
 done
 
-## Remove everything for uninstalled foreign packages, keep latest version for uninstalled native packages, keep three latest versions for installed packages
+## Remove everything for uninstalled foreign packages, keep latest version for uninstalled native packages, keep two latest versions for installed packages
 /usr/bin/paccache -qruk0 $pkgcache
 /usr/bin/paccache -qruk1
-/usr/bin/paccache -qrk3 -c /var/cache/pacman/pkg $pkgcache
+/usr/bin/paccache -qrk2 -c /var/cache/pacman/pkg $pkgcache

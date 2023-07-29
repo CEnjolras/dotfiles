@@ -55,8 +55,8 @@ git clone https://aur.archlinux.org/yay.git && (cd yay && makepkg -si --noconfir
 info_print "Dealing with pacman and yay cache..."
 sudo pacman -S --noconfirm pacman-contrib
 # Downloading cleaning script
-curl -L --create-dirs -o $HOME/.local/bin/yaycache https://raw.githubusercontent.com/CEnjolras/dotfiles/main/install/yaycache && chmod +x $HOME/.local/bin/yaycache
-touch $HOME/.bashrc && echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$HOME/.bashrc" && source "$HOME/.bashrc"
+curl -L --create-dirs -o ~/.local/bin/yaycache https://raw.githubusercontent.com/CEnjolras/dotfiles/main/install/yaycache && chmod +x ~/.local/bin/yaycache
+touch ~/.bashrc && echo 'export PATH="~/.local/bin:$PATH"' >> "~/.bashrc" && source "~/.bashrc"
 # Hooking it to pacman upgrades and uninstallations
 sudo curl -L --create-dirs -o /usr/share/libalpm/hooks/yaycache.hook https://raw.githubusercontent.com/CEnjolras/dotfiles/main/install/yaycache.hook
 
