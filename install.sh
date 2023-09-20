@@ -4,7 +4,6 @@
 #
 
 # 1 - Installing ansible
-info_print "Install ansible"
 sudo pacman -S ansible --noconfirm
 
 # 2 - Downloading and playing ansible playbook
