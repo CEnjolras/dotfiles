@@ -8,14 +8,5 @@ else
   echo "pacman-contrib is already installed."
 fi
 
-# Install yay from the AUR
-if ! command -v yay &> /dev/null; then
-  echo "Installing yay..."
-  git clone https://aur.archlinux.org/yay.git
-  cd yay
-  makepkg -si --noconfirm
-  cd ..
-  rm -rf yay
-else
-  echo "yay is already installed."
-fi
+echo "Installing yay..."
+git clone https://aur.archlinux.org/yay.git && (cd yay && makepkg -si --noconfirm) && rm -rf yay
