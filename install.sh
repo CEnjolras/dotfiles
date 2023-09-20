@@ -4,8 +4,8 @@
 #
 
 # 1 - Installing ansible
-sudo pacman -S ansible --noconfirm
+#sudo pacman -S ansible --noconfirm
 
 # 2 - Downloading and playing ansible playbook
-wget https://raw.githubusercontent.com/CEnjolras/dotfiles/main/playbook.yml
+wget https://raw.githubusercontent.com/CEnjolras/dotfiles/main/playbook.yml playbook.yml
 ansible-playbook playbook.yml --ask-become-pass
