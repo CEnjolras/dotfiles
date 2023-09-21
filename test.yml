@@ -1,4 +1,5 @@
 ---
 #- import_playbook: playbooks/pacman_reflector.yml
 - import_playbook: playbooks/terminal_fish_foot.yml
-- import_playbook: playbooks/hyprland.yml
+- import_playbook: playbooks/yay.yml
+#- import_playbook: playbooks/hyprland.yml

@@ -1,0 +1,29 @@
+---
+- name: Install yay AUR helper
+  hosts: localhost
+  become: yes  # Use sudo for administrative tasks
+  tasks:
+
+    - name: Install necessary dependencies
+      pacman:
+        name:
+          - base-devel
+          - git
+        state: present
+
+    - name: Clone yay from AUR
+      git:
+        repo: 'https://aur.archlinux.org/yay.git'
+        dest: '/tmp/yay'
+      become_user: "{{ ansible_user }}"  # Clone the repo as the current user
+
+    - name: Build and install yay
+      command:
+        cmd: makepkg -si --noconfirm
+        chdir: '/tmp/yay'
+      become_user: "{{ ansible_user }}"  # Build and install as the current user
+
+    - name: Clean up yay build directory
+      file:
+        path: '/tmp/yay'
+        state: absent

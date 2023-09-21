@@ -1,7 +1,7 @@
 ---
-- name: Install and configure hyprland as Wayland compositor
+- name: Install and configure hyprland
   hosts: localhost
-  become: yes  # Use sudo for administrative tasks
+  become: yes
 
   tasks:
     - name: Install hyprland
