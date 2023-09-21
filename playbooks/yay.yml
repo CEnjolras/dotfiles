@@ -15,13 +15,15 @@
       git:
         repo: 'https://aur.archlinux.org/yay.git'
         dest: '/tmp/yay'
-      become_user: "{{ ansible_user }}"  # Clone the repo as the current user
+      become: no  # Set to no to ensure the task runs as the regular user
+      become_user: "{{ ansible_user_id }}"  # Clone the repo as the current user
 
     - name: Build and install yay
       command:
         cmd: makepkg -si --noconfirm
         chdir: '/tmp/yay'
-      become_user: "{{ ansible_user }}"  # Build and install as the current user
+      become: no  # Set to no to ensure the task runs as the regular user
+      become_user: "{{ ansible_user_id }}"  # Build and install as the current user
 
     - name: Clean up yay build directory
       file:
