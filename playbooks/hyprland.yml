@@ -1,10 +1,20 @@
 ---
-- name: Install and configure hyprland
+- name: Install hyprland-git using yay
   hosts: localhost
-  become: yes
-
+  become: no  # yay should not be run as root
   tasks:
-    - name: Install hyprland
-      package:
-        name: hyprland
-        state: present
+
+    - name: Check if yay is installed
+      stat:
+        path: /usr/bin/yay
+      register: yay_stat
+
+    - name: Fail if yay is not installed
+      fail:
+        msg: "yay is required to install AUR packages. Please install yay first."
+      when: not yay_stat.stat.exists
+
+    - name: Install hyprland-git from AUR using yay
+      command: yay -S --noconfirm hyprland-git
+      args:
+        creates: "/path/to/a/file/created/by/hyprland-git/package"  # This prevents reinstallation if the package is already installed
