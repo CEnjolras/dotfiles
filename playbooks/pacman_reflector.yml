@@ -1,6 +1,7 @@
 ---
-# Configuring pacman to update mirror list every week using reflector.
-- name: Configure pacman and set anacron job for reflector
+# Configuring pacman to update mirror list every week using reflector
+# and to clean the cache after every upgrade
+- name: Configure pacman
   hosts: all
   become: yes
   tasks:
@@ -30,6 +31,24 @@
         group: root
         mode: '0644'
       notify: Restart anacron
+
+    - name: Create Pacman cache cleanup hook for upgrades
+      copy:
+        dest: "/etc/pacman.d/hooks/cleanup.hook"
+        content: |
+          [Trigger]
+          Operation = Upgrade
+          Type = Package
+          Target = *
+    
+          [Action]
+          Description = Cleaning pacman cache on upgrade...
+          When = PostTransaction
+          Exec = /usr/bin/paccache -rk2
+        owner: root
+        group: root
+        mode: '0644'
+      become: true
 
   handlers:
     - name: Restart anacron
