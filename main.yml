@@ -1,0 +1,16 @@
+---
+- name: Download and Execute Playbooks
+  hosts: localhost
+  tasks:
+    - name: Download pacman_reflector playbook
+      get_url:
+        url: https://raw.githubusercontent.com/CEnjolras/dotfiles/main/playbooks/pacman_reflector.yml
+        dest: /tmp/pacman_reflector.yml
+
+    - name: Download terminal_fish_foot playbook
+      get_url:
+        url: https://raw.githubusercontent.com/CEnjolras/dotfiles/main/playbooks/terminal_fish_foot.yml
+        dest: /tmp/terminal_fish_foot.yml
+
+- import_playbook: /tmp/pacman_reflector.yml
+- import_playbook: /tmp/terminal_fish_foot.yml

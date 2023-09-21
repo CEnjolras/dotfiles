@@ -7,5 +7,5 @@
 #sudo pacman -S ansible --noconfirm
 
 # 2 - Downloading and playing ansible playbook
-curl -o playbook.yml https://raw.githubusercontent.com/CEnjolras/dotfiles/main/playbook.yml
-ansible-playbook playbook.yml --ask-become-pass
+curl -o main.yml https://raw.githubusercontent.com/CEnjolras/dotfiles/main/main.yml
+ansible-playbook main.yml --ask-become-pass
