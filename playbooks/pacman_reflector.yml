@@ -2,7 +2,7 @@
 # Configuring pacman to update mirror list every week using reflector
 # and to clean the cache after every upgrade
 - name: Configure pacman
-  hosts: all
+  hosts: localhost
   become: yes
   tasks:
 
