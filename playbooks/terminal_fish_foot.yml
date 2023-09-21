@@ -1,0 +1,24 @@
+---
+# Setting up the fish shell and foot terminal.
+- name: Install fish and foot
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Ensure fish and foot are installed
+      pacman:
+        name:
+          - fish
+          - foot
+        state: present
+
+- name: set up fish as default terminal for current user
+  hosts: localhost
+  become: no
+  vars:
+    the_user: "{{ ansible_user_id }}"
+  tasks:
+    - name: change user shell to fish
+      become: yes
+      user:
+        name: "{{ the_user }}"
+        shell: /bin/fish

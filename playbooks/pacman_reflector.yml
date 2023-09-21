@@ -1,5 +1,6 @@
 ---
-- name: Configure pacman and set anacron job
+# Configuring pacman to update mirror list every week using reflector.
+- name: Configure pacman and set anacron job for reflector
   hosts: all
   become: yes
   tasks:
@@ -35,24 +36,3 @@
       systemd:
         name: anacron
         state: restarted
-- name : Install fish and foot
-  hosts: localhost
-  become: yes
-  tasks:
-    - name: Ensure fish and foot are installed
-      pacman:
-        name:
-          - fish
-          - foot
-        state: present
-- name: set up fish as default terminal for current user
-  hosts: localhost
-  become: no
-  vars:
-    the_user: "{{ ansible_user_id }}"
-  tasks:
-    - name: change user shell to fish
-      become: yes
-      user:
-        name: "{{ the_user }}"
-        shell: /bin/zsh
