@@ -6,11 +6,13 @@
       get_url:
         url: https://raw.githubusercontent.com/CEnjolras/dotfiles/main/playbooks/pacman_reflector.yml
         dest: /tmp/pacman_reflector.yml
+        force: yes
 
     - name: Download terminal_fish_foot playbook
       get_url:
         url: https://raw.githubusercontent.com/CEnjolras/dotfiles/main/playbooks/terminal_fish_foot.yml
         dest: /tmp/terminal_fish_foot.yml
+        force: yes
 
 - import_playbook: /tmp/pacman_reflector.yml
 - import_playbook: /tmp/terminal_fish_foot.yml
