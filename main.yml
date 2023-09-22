@@ -1,7 +1,7 @@
 ---
-- name: Main playbook to clone and execute other playbooks
+- name: Main playbook using include_tasks
   hosts: localhost
-  become: yes  # Some tasks might require sudo permissions
+  become: yes
   tasks:
     - name: Ensure git is installed
       pacman:
@@ -10,29 +10,32 @@
 
     - name: Create a directory for the playbooks
       file:
-        path: "/tmp/dotfiles_playbooks"
+        path: "~/dotfiles_playbooks"
         state: directory
-      become: no
 
     - name: Clone dotfiles repository
       git:
         repo: 'https://github.com/CEnjolras/dotfiles.git'
-        dest: '/tmp/dotfiles_playbooks'
-        depth: 1  # Shallow clone, get only the latest revision
+        dest: '~/dotfiles_playbooks'
+        depth: 1
         force: yes
-      become: no
 
-#- import_playbook: /tmp/dotfiles_playbooks/playbooks/pacman_reflector.yml
-#- import_playbook: /tmp/dotfiles_playbooks/playbooks/yay.yml
-#- import_playbook: /tmp/dotfiles_playbooks/playbooks/terminal_fish_foot.yml
-#- import_playbook: /tmp/dotfiles_playbooks/playbooks/nvm.yml
-#- import_playbook: /tmp/dotfiles_playbooks/playbooks/hyprland.yml
+    - name: Include pacman_reflector tasks
+      include_tasks: '~/dotfiles_playbooks/playbooks/pacman_reflector.yml'
 
-- name: Cleanup - Remove the dotfiles_playbooks directory
-  hosts: localhost
-  become: no
-  tasks:
-    - name: Delete the dotfiles_playbooks directory
+    - name: Include yay tasks
+      include_tasks: '~/dotfiles_playbooks/playbooks/yay.yml'
+
+    - name: Include terminal_fish_foot tasks
+      include_tasks: '~/dotfiles_playbooks/playbooks/terminal_fish_foot.yml'
+
+    - name: Include nvm tasks
+      include_tasks: '~/dotfiles_playbooks/playbooks/nvm.yml'
+
+    - name: Include hyprland tasks
+      include_tasks: '~/dotfiles_playbooks/playbooks/hyprland.yml'
+
+    - name: Cleanup - Remove the dotfiles_playbooks directory
       file:
-        path: "/tmp/dotfiles_playbooks"
+        path: "~/dotfiles_playbooks"
         state: absent
