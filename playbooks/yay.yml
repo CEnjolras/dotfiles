@@ -1,38 +1,33 @@
 ---
-- name: Ensure yay is installed
-  hosts: localhost
-  become: yes  # Some tasks might require sudo
-  tasks:
+- name: Check if yay is installed
+  stat:
+    path: /usr/bin/yay
+  register: yay_stat
 
-    - name: Check if yay is installed
-      stat:
-        path: /usr/bin/yay
-      register: yay_stat
+- name: Install necessary dependencies for yay
+  pacman:
+    name:
+      - base-devel
+      - git
+    state: present
+  when: not yay_stat.stat.exists
 
-    - name: Install necessary dependencies for yay
-      pacman:
-        name:
-          - base-devel
-          - git
-        state: present
-      when: not yay_stat.stat.exists
+- name: Clone yay from AUR
+  git:
+    repo: 'https://aur.archlinux.org/yay.git'
+    dest: '/tmp/yay'
+  become: no
+  when: not yay_stat.stat.exists
 
-    - name: Clone yay from AUR
-      git:
-        repo: 'https://aur.archlinux.org/yay.git'
-        dest: '/tmp/yay'
-      become: no
-      when: not yay_stat.stat.exists
+- name: Build and install yay
+  command:
+    cmd: makepkg -si --noconfirm
+    chdir: '/tmp/yay'
+  become: no
+  when: not yay_stat.stat.exists
 
-    - name: Build and install yay
-      command:
-        cmd: makepkg -si --noconfirm
-        chdir: '/tmp/yay'
-      become: no
-      when: not yay_stat.stat.exists
-
-    - name: Clean up yay build directory
-      file:
-        path: '/tmp/yay'
-        state: absent
-      when: not yay_stat.stat.exists
+- name: Clean up yay build directory
+  file:
+    path: '/tmp/yay'
+    state: absent
+  when: not yay_stat.stat.exists
