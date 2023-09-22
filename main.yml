@@ -10,32 +10,32 @@
 
     - name: Create a directory for the playbooks
       file:
-        path: "~/dotfiles_playbooks"
+        path: "/tmp"
         state: directory
 
     - name: Clone dotfiles repository
       git:
         repo: 'https://github.com/CEnjolras/dotfiles.git'
-        dest: '~/dotfiles_playbooks'
+        dest: '/tmp'
         depth: 1
         force: yes
 
     - name: Include pacman_reflector tasks
-      include_tasks: '~/dotfiles_playbooks/playbooks/pacman_reflector.yml'
+      include_tasks: '/tmp/playbooks/pacman_reflector.yml'
 
     - name: Include yay tasks
-      include_tasks: '~/dotfiles_playbooks/playbooks/yay.yml'
+      include_tasks: '/tmp/playbooks/yay.yml'
 
     - name: Include terminal_fish_foot tasks
-      include_tasks: '~/dotfiles_playbooks/playbooks/terminal_fish_foot.yml'
+      include_tasks: '/tmp/playbooks/terminal_fish_foot.yml'
 
     - name: Include nvm tasks
-      include_tasks: '~/dotfiles_playbooks/playbooks/nvm.yml'
+      include_tasks: '/tmp/playbooks/nvm.yml'
 
     - name: Include hyprland tasks
-      include_tasks: '~/dotfiles_playbooks/playbooks/hyprland.yml'
+      include_tasks: '/tmp/playbooks/hyprland.yml'
 
     - name: Cleanup - Remove the dotfiles_playbooks directory
       file:
-        path: "~/dotfiles_playbooks"
+        path: "/tmp"
         state: absent
