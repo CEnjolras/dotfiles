@@ -1,25 +1,39 @@
 ---
-- name: Download and Execute Playbooks
+- name: Main playbook to download and execute other playbooks
   hosts: localhost
   tasks:
-    - name: Download pacman_reflector playbook
+    - name: Download setup pacman playbook
       get_url:
         url: https://raw.githubusercontent.com/CEnjolras/dotfiles/main/playbooks/pacman_reflector.yml
         dest: /tmp/pacman_reflector.yml
+        force: yes  # Overwrite file if it exists
+
+    - name: Download setup yay playbook
+      get_url:
+        url: https://raw.githubusercontent.com/CEnjolras/dotfiles/main/playbooks/yay.yml
+        dest: /tmp/yay.yml
         force: yes
 
-    - name: Download terminal_fish_foot playbook
+    - name: Download setup fish and foot terminal playbook
       get_url:
         url: https://raw.githubusercontent.com/CEnjolras/dotfiles/main/playbooks/terminal_fish_foot.yml
         dest: /tmp/terminal_fish_foot.yml
         force: yes
 
-    - name: Download nvm playbook
+    - name: Download setup nvm playbook
       get_url:
         url: https://raw.githubusercontent.com/CEnjolras/dotfiles/main/playbooks/nvm.yml
         dest: /tmp/nvm.yml
         force: yes
 
+    - name: Download setup hyprland playbook
+      get_url:
+        url: https://raw.githubusercontent.com/CEnjolras/dotfiles/main/playbooks/hyprland.yml
+        dest: /tmp/hyprland.yml
+        force: yes
+
 - import_playbook: /tmp/pacman_reflector.yml
+- import_playbook: /tmp/yay.yml
 - import_playbook: /tmp/terminal_fish_foot.yml
 - import_playbook: /tmp/nvm.yml
+- import_playbook: /tmp/hyprland.yml
