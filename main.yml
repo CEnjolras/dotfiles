@@ -1,44 +1,38 @@
 ---
-- name: Main playbook to download and execute other playbooks
+- name: Main playbook to clone and execute other playbooks
   hosts: localhost
+  become: yes  # Some tasks might require sudo permissions
   tasks:
-    - name: Ensure /tmp directory exists
+    - name: Ensure git is installed
+      pacman:
+        name: git
+        state: present
+
+    - name: Create a directory for the playbooks
       file:
-        path: /tmp
+        path: "~/dotfiles_playbooks"
         state: directory
+      become: no
 
-    - name: Download setup pacman playbook
-      get_url:
-        url: https://raw.githubusercontent.com/CEnjolras/dotfiles/main/playbooks/pacman_reflector.yml
-        dest: /tmp/pacman_reflector.yml
-        force: yes  # Overwrite file if it exists
-
-    - name: Download setup yay playbook
-      get_url:
-        url: https://raw.githubusercontent.com/CEnjolras/dotfiles/main/playbooks/yay.yml
-        dest: /tmp/yay.yml
+    - name: Clone dotfiles repository
+      git:
+        repo: 'https://github.com/CEnjolras/dotfiles.git'
+        dest: '~/dotfiles_playbooks'
+        depth: 1  # Shallow clone, get only the latest revision
         force: yes
+      become: no
 
-    - name: Download setup fish and foot terminal playbook
-      get_url:
-        url: https://raw.githubusercontent.com/CEnjolras/dotfiles/main/playbooks/terminal_fish_foot.yml
-        dest: /tmp/terminal_fish_foot.yml
-        force: yes
+- import_playbook: ~/dotfiles_playbooks/playbooks/pacman_reflector.yml
+- import_playbook: ~/dotfiles_playbooks/playbooks/yay.yml
+- import_playbook: ~/dotfiles_playbooks/playbooks/terminal_fish_foot.yml
+- import_playbook: ~/dotfiles_playbooks/playbooks/nvm.yml
+- import_playbook: ~/dotfiles_playbooks/playbooks/hyprland.yml
 
-    - name: Download setup nvm playbook
-      get_url:
-        url: https://raw.githubusercontent.com/CEnjolras/dotfiles/main/playbooks/nvm.yml
-        dest: /tmp/nvm.yml
-        force: yes
-
-    - name: Download setup hyprland playbook
-      get_url:
-        url: https://raw.githubusercontent.com/CEnjolras/dotfiles/main/playbooks/hyprland.yml
-        dest: /tmp/hyprland.yml
-        force: yes
-
-- import_playbook: /tmp/pacman_reflector.yml
-- import_playbook: /tmp/yay.yml
-- import_playbook: /tmp/terminal_fish_foot.yml
-- import_playbook: /tmp/nvm.yml
-- import_playbook: /tmp/hyprland.yml
+- name: Cleanup - Remove the dotfiles_playbooks directory
+  hosts: localhost
+  become: no
+  tasks:
+    - name: Delete the dotfiles_playbooks directory
+      file:
+        path: "~/dotfiles_playbooks"
+        state: absent
