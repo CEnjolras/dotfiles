@@ -9,7 +9,7 @@
     name: cronie
     state: present
 
-- name: Ensure anacron service is enabled and running
+- name: Ensure cronie service is enabled and running
   systemd:
     name: cronie.service
     enabled: yes
