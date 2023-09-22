@@ -23,7 +23,11 @@
     owner: root
     group: root
     mode: '0644'
-  notify: Restart anacron
+
+- name: Restart anacron
+  systemd:
+    name: anacron
+    state: restarted
 
 - name: Configure paccache hook to clean package cache
   copy:
@@ -41,9 +45,3 @@
     owner: root
     group: root
     mode: '0644'
-
-handlers:
-  - name: Restart anacron
-    systemd:
-      name: anacron
-      state: restarted
