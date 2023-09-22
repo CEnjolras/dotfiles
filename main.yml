@@ -2,6 +2,11 @@
 - name: Main playbook to download and execute other playbooks
   hosts: localhost
   tasks:
+    - name: Ensure /tmp directory exists
+      file:
+        path: /tmp
+        state: directory
+
     - name: Download setup pacman playbook
       get_url:
         url: https://raw.githubusercontent.com/CEnjolras/dotfiles/main/playbooks/pacman_reflector.yml
