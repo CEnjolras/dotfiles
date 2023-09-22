@@ -8,34 +8,34 @@
         name: git
         state: present
 
-    - name: Create a directory for the playbooks
+    - name: Remove the /tmp/playbooks directory if it exists
       file:
-        path: "/tmp"
-        state: directory
+        path: "/tmp/playbooks"
+        state: absent
 
-    - name: Clone dotfiles repository
+    - name: Clone dotfiles repository to /tmp/playbooks
       git:
         repo: 'https://github.com/CEnjolras/dotfiles.git'
-        dest: '/tmp'
+        dest: '/tmp/playbooks'
         depth: 1
         force: yes
 
     - name: Include pacman_reflector tasks
-      include_tasks: '/tmp/playbooks/pacman_reflector.yml'
+      include_tasks: '/tmp/playbooks/playbooks/pacman_reflector.yml'
 
     - name: Include yay tasks
-      include_tasks: '/tmp/playbooks/yay.yml'
+      include_tasks: '/tmp/playbooks/playbooks/yay.yml'
 
     - name: Include terminal_fish_foot tasks
-      include_tasks: '/tmp/playbooks/terminal_fish_foot.yml'
+      include_tasks: '/tmp/playbooks/playbooks/terminal_fish_foot.yml'
 
     - name: Include nvm tasks
-      include_tasks: '/tmp/playbooks/nvm.yml'
+      include_tasks: '/tmp/playbooks/playbooks/nvm.yml'
 
     - name: Include hyprland tasks
-      include_tasks: '/tmp/playbooks/hyprland.yml'
+      include_tasks: '/tmp/playbooks/playbooks/hyprland.yml'
 
     - name: Cleanup - Remove the dotfiles_playbooks directory
       file:
-        path: "/tmp"
+        path: "/tmp/playbooks"
         state: absent
