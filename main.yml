@@ -22,11 +22,11 @@
         force: yes
       become: no
 
-- import_playbook: /tmp/dotfiles_playbooks/playbooks/pacman_reflector.yml
-- import_playbook: /tmp/dotfiles_playbooks/playbooks/yay.yml
-- import_playbook: /tmp/dotfiles_playbooks/playbooks/terminal_fish_foot.yml
-- import_playbook: /tmp/dotfiles_playbooks/playbooks/nvm.yml
-- import_playbook: /tmp/dotfiles_playbooks/playbooks/hyprland.yml
+#- import_playbook: /tmp/dotfiles_playbooks/playbooks/pacman_reflector.yml
+#- import_playbook: /tmp/dotfiles_playbooks/playbooks/yay.yml
+#- import_playbook: /tmp/dotfiles_playbooks/playbooks/terminal_fish_foot.yml
+#- import_playbook: /tmp/dotfiles_playbooks/playbooks/nvm.yml
+#- import_playbook: /tmp/dotfiles_playbooks/playbooks/hyprland.yml
 
 - name: Cleanup - Remove the dotfiles_playbooks directory
   hosts: localhost
