@@ -42,8 +42,8 @@
     group: root
     mode: '0644'
 
-  handlers:
-    - name: Restart anacron
-      systemd:
-        name: anacron
-        state: restarted
+handlers:
+  - name: Restart anacron
+    systemd:
+      name: anacron
+      state: restarted
