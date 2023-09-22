@@ -10,23 +10,23 @@
 
     - name: Create a directory for the playbooks
       file:
-        path: "~/dotfiles_playbooks"
+        path: "/tmp/dotfiles_playbooks"
         state: directory
       become: no
 
     - name: Clone dotfiles repository
       git:
         repo: 'https://github.com/CEnjolras/dotfiles.git'
-        dest: '~/dotfiles_playbooks'
+        dest: '/tmp/dotfiles_playbooks'
         depth: 1  # Shallow clone, get only the latest revision
         force: yes
       become: no
 
-- import_playbook: ~/dotfiles_playbooks/playbooks/pacman_reflector.yml
-- import_playbook: ~/dotfiles_playbooks/playbooks/yay.yml
-- import_playbook: ~/dotfiles_playbooks/playbooks/terminal_fish_foot.yml
-- import_playbook: ~/dotfiles_playbooks/playbooks/nvm.yml
-- import_playbook: ~/dotfiles_playbooks/playbooks/hyprland.yml
+- import_playbook: /tmp/dotfiles_playbooks/playbooks/pacman_reflector.yml
+- import_playbook: /tmp/dotfiles_playbooks/playbooks/yay.yml
+- import_playbook: /tmp/dotfiles_playbooks/playbooks/terminal_fish_foot.yml
+- import_playbook: /tmp/dotfiles_playbooks/playbooks/nvm.yml
+- import_playbook: /tmp/dotfiles_playbooks/playbooks/hyprland.yml
 
 - name: Cleanup - Remove the dotfiles_playbooks directory
   hosts: localhost
@@ -34,5 +34,5 @@
   tasks:
     - name: Delete the dotfiles_playbooks directory
       file:
-        path: "~/dotfiles_playbooks"
+        path: "/tmp/dotfiles_playbooks"
         state: absent
