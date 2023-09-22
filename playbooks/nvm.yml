@@ -1,0 +1,70 @@
+---
+- name: Install NVM and configure for installed shells
+  hosts: localhost
+  become: yes
+
+  tasks:
+
+    - name: Clone NVM repository
+      git:
+        repo: 'https://github.com/nvm-sh/nvm.git'
+        dest: '{{ ansible_env.HOME }}/.nvm'
+        depth: 1
+      become: no
+      tags: nvm
+
+    - name: Check if bash is installed
+      stat:
+        path: /bin/bash
+      register: bash_stat
+
+    - name: Add NVM sourcing to bashrc if bash is installed
+      lineinfile:
+        path: '{{ ansible_env.HOME }}/.bashrc'
+        line: 'source $HOME/.nvm/nvm.sh'
+        insertafter: EOF
+        create: yes
+      when: bash_stat.stat.exists
+      become: no
+      tags: nvm
+
+    - name: Check if zsh is installed
+      stat:
+        path: /bin/zsh
+      register: zsh_stat
+
+    - name: Add NVM sourcing to zshrc if zsh is installed
+      lineinfile:
+        path: '{{ ansible_env.HOME }}/.zshrc'
+        line: 'source $HOME/.nvm/nvm.sh'
+        insertafter: EOF
+        create: yes
+      when: zsh_stat.stat.exists
+      become: no
+      tags: nvm
+
+    - name: Check if fish is installed
+      stat:
+        path: /bin/fish
+      register: fish_stat
+
+    - name: Ensure Fish config directory exists if fish is installed
+      file:
+        path: '{{ ansible_env.HOME }}/.config/fish'
+        state: directory
+        owner: '{{ ansible_user_id }}'
+        group: '{{ ansible_user_gid }}'
+        mode: '0755'
+      when: fish_stat.stat.exists
+      become: no
+      tags: fish
+
+    - name: Add NVM sourcing to fish config if fish is installed
+      lineinfile:
+        path: '{{ ansible_env.HOME }}/.config/fish/config.fish'
+        line: 'source ~/.nvm/nvm.sh'
+        insertafter: EOF
+        create: yes
+      when: fish_stat.stat.exists
+      become: no
+      tags: nvm

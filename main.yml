@@ -14,5 +14,12 @@
         dest: /tmp/terminal_fish_foot.yml
         force: yes
 
+    - name: Download nvm playbook
+      get_url:
+        url: https://raw.githubusercontent.com/CEnjolras/dotfiles/main/playbooks/nvm.yml
+        dest: /tmp/nvm.yml
+        force: yes
+
 - import_playbook: /tmp/pacman_reflector.yml
 - import_playbook: /tmp/terminal_fish_foot.yml
+- import_playbook: /tmp/nvm.yml
