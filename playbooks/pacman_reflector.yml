@@ -11,22 +11,24 @@
 
 - name: Ensure anacron service is enabled and running
   systemd:
-    name: anacron
+    name: cronie.service
     enabled: yes
     state: started
 
-- name: Set anacron job for reflector
+- name: Add reflector script to cron.monthly
   copy:
-    dest: "/etc/anacron.d/pacman_mirrorupdate"
+    dest: "/etc/cron.monthly/pacman_mirrorupdate"
     content: |
-      7 5 pacman.mirrorupdate /usr/bin/reflector --verbose --latest 5 --sort rate --save /etc/pacman.d/mirrorlist && /usr/bin/pacman -Sy
+      #!/bin/sh
+      /usr/bin/reflector --verbose --latest 5 --sort rate --threads $(nproc) --save /etc/pacman.d/mirrorlist
+      /usr/bin/pacman -Sy
     owner: root
     group: root
-    mode: '0644'
+    mode: '0755'
 
 - name: Restart anacron
   systemd:
-    name: anacron
+    name: cronie.service
     state: restarted
 
 - name: Configure paccache hook to clean package cache
