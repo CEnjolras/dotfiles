@@ -2,5 +2,4 @@
 
 - link:
     ~/.zshrc: zshrc
-
-
+    ~/.config/nvim: nvim
