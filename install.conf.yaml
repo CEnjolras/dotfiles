@@ -3,3 +3,4 @@
 - link:
     ~/.zshrc: zshrc
     ~/.config/nvim: nvim
+    ~/.config/lvim: lvim
